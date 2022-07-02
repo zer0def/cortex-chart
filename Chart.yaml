@@ -6,30 +6,12 @@ home: https://cortexmetrics.io/
 icon: https://avatars2.githubusercontent.com/u/43045022?s=200&v=4
 kubeVersion: ^1.19.0-0
 maintainers:
-  - email: thayward@infoblox.com
-    name: Tom Hayward
-    url: https://github.com/kd7lxl
-  - email: Niclas.Schad@mail.schwarz
-    name: Niclas Schad
-    url: https://github.com/nschad
+- email: thayward@infoblox.com
+  name: Tom Hayward
+  url: https://github.com/kd7lxl
+- email: Niclas.Schad@mail.schwarz
+  name: Niclas Schad
+  url: https://github.com/nschad
 name: cortex
 sources:
-  - https://github.com/cortexproject/cortex-helm-chart
-dependencies:
-  - name: memcached
-    alias: memcached-frontend
-    version: 6.3.2
-    repository: https://charts.bitnami.com/bitnami
-    condition: memcached-frontend.enabled
-  - name: memcached
-    alias: memcached-blocks-index
-    version: 6.3.2
-    repository: https://charts.bitnami.com/bitnami
-  - name: memcached
-    alias: memcached-blocks
-    version: 6.3.2
-    repository: https://charts.bitnami.com/bitnami
-  - name: memcached
-    alias: memcached-blocks-metadata
-    version: 6.3.2
-    repository: https://charts.bitnami.com/bitnami
+- https://github.com/cortexproject/cortex-helm-chart

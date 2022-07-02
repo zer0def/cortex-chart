@@ -82,33 +82,6 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
-Create configuration parameters for memcached configuration
-*/}}
-{{- define "cortex.memcached" -}}
-{{- if index .Values "memcached-blocks-index" "enabled" }}
-- "-blocks-storage.bucket-store.index-cache.backend=memcached"
-- "-blocks-storage.bucket-store.index-cache.memcached.addresses=dns+{{ .Release.Name }}-memcached-blocks-index.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:11211"
-{{- end -}}
-{{- if index .Values "memcached-blocks" "enabled" }}
-- "-blocks-storage.bucket-store.chunks-cache.backend=memcached"
-- "-blocks-storage.bucket-store.chunks-cache.memcached.addresses=dns+{{ .Release.Name }}-memcached-blocks.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:11211"
-{{- end -}}
-{{- if index .Values "memcached-blocks-metadata" "enabled" }}
-- "-blocks-storage.bucket-store.metadata-cache.backend=memcached"
-- "-blocks-storage.bucket-store.metadata-cache.memcached.addresses=dns+{{ .Release.Name }}-memcached-blocks-metadata.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:11211"
-{{- end -}}
-{{- end -}}
-
-{{/*
-Create configuration for frontend memcached configuration
-*/}}
-{{- define "cortex.frontend-memcached" -}}
-{{- if index .Values "memcached-frontend" "enabled" }}
-- "-frontend.memcached.addresses=dns+{{ .Release.Name }}-memcached-frontend.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:11211"
-{{- end -}}
-{{- end -}}
-
-{{/*
 Determine the policy api version
 */}}
 {{- define "cortex.pdbVersion" -}}
@@ -147,15 +120,4 @@ Get volume of config secret of configMap
   secret:
     secretName: {{ template "cortex.fullname" . }}
   {{- end }}
-{{- end -}}
-
-{{/*
-Get cortex hpa version by k8s version
-*/}}
-{{- define "cortex.hpaVersion" -}}
-{{- if or (.Capabilities.APIVersions.Has "autoscaling/v2/HorizontalPodAutoscaler") (semverCompare ">=1.23" .Capabilities.KubeVersion.Version) -}}
-autoscaling/v2
-{{- else -}}
-autoscaling/v2beta2
-{{- end -}}
 {{- end -}}
